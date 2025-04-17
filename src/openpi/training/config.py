@@ -754,7 +754,13 @@ _CONFIGS = [
         ),
         # Note that we load the pi0-FAST base model checkpoint here.
         weight_loader=weight_loaders.CheckpointWeightLoader('s3://openpi-assets/checkpoints/pi0_fast_base/params'),
-        num_train_steps=30_000,
+        num_train_steps=5_000,
+        save_interval=500,
+        freeze_filter=pi0.Pi0Config(
+            paligemma_variant='gemma_2b_lora', action_expert_variant='gemma_300m_lora'
+        ).get_freeze_filter(),
+        # Turn off EMA for LoRA finetuning.
+        ema_decay=None,
     ),
     TrainConfig(
         # Change the name to reflect your model and dataset.
@@ -762,7 +768,7 @@ _CONFIGS = [
         # Here you define the model config -- In this example we use pi0 as the model
         # architecture and perform *full* finetuning. in the examples below we show how to modify
         # this to perform *low-memory* (LORA) finetuning and use pi0-FAST as an alternative architecture.
-        model=pi0.Pi0Config(paligemma_variant='gemma_2b_lora', action_expert_variant='gemma_300m_lora'),
+        model=pi0.Pi0Config(),
         # Here you define the dataset you are training on. In this example we use the Libero
         # dataset. For your own dataset, you can change the repo_id to point to your dataset.
         # Also modify the DataConfig to use the new config you made for your dataset above.
@@ -781,7 +787,8 @@ _CONFIGS = [
         weight_loader=weight_loaders.CheckpointWeightLoader('s3://openpi-assets/checkpoints/pi0_base/params'),
         # Below you can define other hyperparameters like the learning rate, number of training steps, etc.
         # Check the base TrainConfig class for a full list of available hyperparameters.
-        num_train_steps=30_000,
+        num_train_steps=5_000,
+        save_interval=500,
     ),
 ]
 
