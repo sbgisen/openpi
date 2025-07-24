@@ -438,7 +438,7 @@ class LeRobotSoarDataConfig(DataConfigFactory):
 
         # TODO(karl): comment this out once we have updated the Libero checkpoints to not use
         # the delta action transform
-        delta_action_mask = _transforms.make_bool_mask(12, -1)
+        delta_action_mask = _transforms.make_bool_mask(7, -1)
         data_transforms = data_transforms.push(
             inputs=[_transforms.DeltaActions(delta_action_mask)],
             outputs=[_transforms.AbsoluteActions(delta_action_mask)],
@@ -818,9 +818,8 @@ _CONFIGS = [
         # two-arm robots. Generally, err on the lower side here first, and potentially increase the value if
         # you see many warnings being thrown during training.
         model=pi0_fast.Pi0FASTConfig(
-            action_dim=13,
-            action_horizon=13,
-            max_token_len=180,
+            action_dim=8,
+            action_horizon=32,
             paligemma_variant='gemma_2b_lora',
         ),
         data=LeRobotSoarDataConfig(
@@ -832,10 +831,10 @@ _CONFIGS = [
         ),
         # Note that we load the pi0-FAST base model checkpoint here.
         weight_loader=weight_loaders.CheckpointWeightLoader('gs://openpi-assets/checkpoints/pi0_fast_base/params'),
-        num_train_steps=5_000,
-        save_interval=500,
-        freeze_filter=pi0.Pi0Config(
-            paligemma_variant='gemma_2b_lora', action_expert_variant='gemma_300m_lora'
+        num_train_steps=30_000,
+        save_interval=5000,
+        freeze_filter=pi0_fast.Pi0FASTConfig(
+            action_dim=8, action_horizon=32, paligemma_variant='gemma_2b_lora'
         ).get_freeze_filter(),
         # Turn off EMA for LoRA finetuning.
         ema_decay=None,
