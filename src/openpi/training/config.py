@@ -405,7 +405,7 @@ class LeRobotSoarDataConfig(DataConfigFactory):
                     {
                         'observation/head_image': 'head_image',
                         'observation/hand_image': 'hand_image',
-                        'observation/state': 'state',
+                        'observation/state': 'observation.state',
                         'actions': 'actions',
                         'prompt': 'prompt',
                     }
