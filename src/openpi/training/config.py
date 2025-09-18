@@ -825,7 +825,7 @@ _CONFIGS = [
         data=LeRobotSoarDataConfig(
             repo_id='tachaioiq/soar',
             base_config=DataConfig(
-                local_files_only=True,  # Set to True for local-only datasets.
+                # local_files_only=True,  # Set to True for local-only datasets.
                 prompt_from_task=True,
             ),
         ),
@@ -852,7 +852,7 @@ _CONFIGS = [
         data=LeRobotSoarDataConfig(
             repo_id='tachaioiq/soar',
             base_config=DataConfig(
-                local_files_only=True,  # Set to True for local-only datasets.
+                # local_files_only=True,  # Set to True for local-only datasets.
                 # This flag determines whether we load the prompt (i.e. the task instruction) from the
                 # ``task`` field in the LeRobot dataset. If set to True, the prompt will show up in
                 # a field called ``prompt`` in the input dict. The recommended setting is True.
