@@ -1049,7 +1049,7 @@ _CONFIGS = [
         # two-arm robots. Generally, err on the lower side here first, and potentially increase the value if
         # you see many warnings being thrown during training.
         model=pi0_fast.Pi0FASTConfig(
-            action_dim=8,
+            action_dim=13,
             action_horizon=32,
             paligemma_variant='gemma_2b_lora',
         ),
@@ -1065,7 +1065,7 @@ _CONFIGS = [
         num_train_steps=30_000,
         save_interval=5000,
         freeze_filter=pi0_fast.Pi0FASTConfig(
-            action_dim=8, action_horizon=32, paligemma_variant='gemma_2b_lora'
+            action_dim=13, action_horizon=32, paligemma_variant='gemma_2b_lora'
         ).get_freeze_filter(),
         # Turn off EMA for LoRA finetuning.
         ema_decay=None,
